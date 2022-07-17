@@ -1,5 +1,6 @@
 package com.springboot.blog.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.model.Post;
 import com.springboot.blog.payload.PostDto;
@@ -24,10 +25,13 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
+    private ObjectMapper mapper;
 
-    public PostServiceImpl(PostRepository postRepository) {
+
+    public PostServiceImpl(PostRepository postRepository, ObjectMapper mapper) {
 
         this.postRepository = postRepository;
+        this.mapper=mapper;
     }
 
     @Override
@@ -93,6 +97,7 @@ public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy,String s
 
     //Convert Entity into DTO
     private PostDto mapToDTO(Post post){
+//      PostDto postDto = mapper.readerForMapOf(post,PostDto.class);
         PostDto postDto = new PostDto();
         postDto.setId(post.getId());
         postDto.setTitle(post.getTitle());
